@@ -1,15 +1,16 @@
 # Markdown to HTML Converter
 
-A static web application that converts Markdown content to beautifully rendered HTML with syntax highlighting for code blocks.
+A static web application that converts Markdown content to beautifully rendered HTML with syntax highlighting for code blocks, featuring a tabbed interface to switch between rendered preview and raw Markdown source.
 
 ## Description
 
-This project fetches a Markdown file (`input.md`), converts it to HTML using the marked.js library, and renders it in the browser with syntax highlighting powered by highlight.js. The application provides a clean, professional interface for displaying converted Markdown content.
+This project fetches a Markdown file (`input.md`), converts it to HTML using the marked.js library, and renders it in the browser with syntax highlighting powered by highlight.js. The application provides a clean, professional interface with tab navigation to view both the rendered HTML output and the original Markdown source.
 
 ## Features
 
 - 📝 **Markdown Conversion**: Converts Markdown to HTML using marked.js
 - 🎨 **Syntax Highlighting**: Beautiful code syntax highlighting with highlight.js
+- 📑 **Tab Switching**: Toggle between rendered HTML preview and raw Markdown source
 - 📱 **Responsive Design**: Mobile-friendly layout using Bootstrap 5
 - ⚡ **Fast Loading**: CDN-based libraries for optimal performance
 - 🎯 **Error Handling**: Graceful error messages if content fails to load
@@ -28,12 +29,17 @@ This project fetches a Markdown file (`input.md`), converts it to HTML using the
 1. The page loads with the marked.js and highlight.js libraries from CDN
 2. JavaScript fetches the `input.md` file from the same directory
 3. The Markdown content is converted to HTML using `marked.parse()`
-4. The HTML is injected into the `#markdown-output` element
-5. Code blocks are automatically highlighted using highlight.js
+4. The HTML is injected into the `#markdown-output` element (Preview tab)
+5. The raw Markdown is inserted into the `#markdown-source` element (Source tab)
+6. Code blocks are automatically highlighted using highlight.js
+7. Users can switch between Preview and Source tabs to view rendered or raw content
 
 ## Usage
 
-Simply open the page in a browser. The Markdown content from `input.md` will be automatically loaded, converted, and displayed with proper formatting and syntax highlighting.
+Simply open the page in a browser. The Markdown content from `input.md` will be automatically loaded, converted, and displayed with proper formatting and syntax highlighting. Click the tabs to switch between:
+
+- **Preview**: See the rendered HTML with formatted headings, lists, and styled code blocks
+- **Markdown Source**: View the original raw Markdown text
 
 ## Deployment
 
@@ -48,9 +54,9 @@ Simply open the page in a browser. The Markdown content from `input.md` will be 
 
 ```
 markdown-to-html-b2c3dd/
-├── index.html          # Main HTML page
-├── script.js           # JavaScript for fetching and converting markdown
-├── styles.css          # Custom styling
+├── index.html          # Main HTML page with tab navigation
+├── script.js           # JavaScript for fetching, converting, and tab switching
+├── styles.css          # Custom styling for tabs and content
 ├── input.md            # Source markdown file
 ├── README.md           # This file
 ├── preview.png         # Screenshot

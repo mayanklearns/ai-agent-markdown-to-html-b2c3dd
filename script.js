@@ -1,6 +1,7 @@
 /**
- * Markdown to HTML Converter
- * Fetches input.md, converts to HTML using marked.js, and applies syntax highlighting with highlight.js
+ * Markdown to HTML Converter with Tab Switching
+ * Fetches input.md, converts to HTML using marked.js, applies syntax highlighting with highlight.js,
+ * and enables switching between rendered HTML preview and raw Markdown source.
  */
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -31,6 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     
     const outputElement = document.getElementById('markdown-output');
+    const sourceElement = document.getElementById('markdown-source');
     
     try {
         // Fetch the markdown file
@@ -53,6 +55,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Insert the converted HTML into the #markdown-output element
         outputElement.innerHTML = fullHtmlContent;
         
+        // Populate the #markdown-source element with raw markdown text
+        // Using textContent preserves all formatting and whitespace
+        sourceElement.textContent = markdownText;
+        
         // Apply syntax highlighting to all code blocks
         document.querySelectorAll('pre code').forEach((block) => {
             hljs.highlightElement(block);
@@ -61,9 +67,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log('Markdown successfully converted and rendered');
         
     } catch (error) {
-        // Error handling: Display user-friendly error message
+        // Error handling: Display user-friendly error message in both views
         console.error('Error loading or converting markdown:', error);
-        outputElement.innerHTML = `
+        const errorHtml = `
             <div class="alert alert-danger" role="alert">
                 <h4 class="alert-heading">Error Loading Content</h4>
                 <p><strong>Error:</strong> ${error.message}</p>
@@ -71,5 +77,43 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <p class="mb-0">Please ensure the <code>input.md</code> file is present in the same directory.</p>
             </div>
         `;
+        outputElement.innerHTML = errorHtml;
+        sourceElement.textContent = 'Error loading markdown file. Please check the console for details.';
     }
+    
+    // Set up tab switching functionality after content is loaded
+    setupTabSwitching();
 });
+
+/**
+ * Set up tab switching between Preview and Source views
+ * Manages active states for both buttons and content containers
+ */
+function setupTabSwitching() {
+    const tabPreview = document.getElementById('tab-preview');
+    const tabSource = document.getElementById('tab-source');
+    const outputElement = document.getElementById('markdown-output');
+    const sourceElement = document.getElementById('markdown-source');
+    
+    // Preview tab click handler
+    tabPreview.addEventListener('click', () => {
+        // Activate preview tab and content
+        tabPreview.classList.add('active');
+        outputElement.classList.add('active');
+        
+        // Deactivate source tab and content
+        tabSource.classList.remove('active');
+        sourceElement.classList.remove('active');
+    });
+    
+    // Source tab click handler
+    tabSource.addEventListener('click', () => {
+        // Activate source tab and content
+        tabSource.classList.add('active');
+        sourceElement.classList.add('active');
+        
+        // Deactivate preview tab and content
+        tabPreview.classList.remove('active');
+        outputElement.classList.remove('active');
+    });
+}
